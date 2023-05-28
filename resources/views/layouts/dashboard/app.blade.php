@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html dir="{{ LaravelLocalization::getCurrentLocaleDirection() }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,29 +8,8 @@
 Commenter/Décommenter du code : au lieu d'ajouter “//” à la main à chaque ligne, sélectionnez un ou plusieurs blocs de code et : Ctrl+K+C/Ctrl+K+U-->
 
 
-<!-- LTE -->
-  <!-- Google Font: Source Sans Pro -->
-  {{-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{ asset('dashboard_files/plugins/fontawesome-free/css/all.min.css') }}">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Tempusdominus Bootstrap 4 -->
-  <link rel="stylesheet" href="{{ asset('dashboard_files/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
-  <!-- iCheck -->
-  <link rel="stylesheet" href="{{ asset('dashboard_files/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-  <!-- JQVMap -->
-  <link rel="stylesheet" href="{{ asset('dashboard_files/plugins/jqvmap/jqvmap.min.css') }}">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{{ asset('dashboard_files/css/adminlte.min.css') }}">
-  <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="{{ asset('dashboard_files/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
-  <!-- Daterange picker -->
-  <link rel="stylesheet" href="{{ asset('dashboard_files/plugins/daterangepicker/daterangepicker.css') }}">
-  <!-- summernote -->
-  <link rel="stylesheet" href="{{ asset('dashboard_files/plugins/summernote/summernote-bs4.min.css') }}"> --}}
-  
 
+  @if (app()->getLocale() == 'ar')
 
 <!-- RTL -->
   <link rel="stylesheet" href="{{ asset('dashboard_files/plugins/fontawesome-free/css/all.min.css') }}">
@@ -56,13 +35,36 @@ Commenter/Décommenter du code : au lieu d'ajouter “//” à la main à chaque
   <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css">
   <!-- Custom style for RTL -->
   <link rel="stylesheet" href="{{ asset('dashboard_files/rtl/css/custom.css') }}">
-  
+  @else
+   
+<!-- LTE -->
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{{ asset('dashboard_files/plugins/fontawesome-free/css/all.min.css') }}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="{{ asset('dashboard_files/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="{{ asset('dashboard_files/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="{{ asset('dashboard_files/plugins/jqvmap/jqvmap.min.css') }}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{ asset('dashboard_files/css/adminlte.min.css') }}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{{ asset('dashboard_files/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="{{ asset('dashboard_files/plugins/daterangepicker/daterangepicker.css') }}">
+  <!-- summernote -->
+  <link rel="stylesheet" href="{{ asset('dashboard_files/plugins/summernote/summernote-bs4.min.css') }}">
+  @endif
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
-  @if (app()->getLocale() == 'fr')
-
+  @if (!app()->getLocale() == 'ar')
 
   <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
@@ -87,7 +89,7 @@ Commenter/Décommenter du code : au lieu d'ajouter “//” à la main à chaque
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Navbar Search -->
-      @if (app()->getLocale() == 'fr')
+      @if (app()->getLocale() == 'fr' || app()->getLocale() == 'en' )
       <li class="nav-item">
         <a class="nav-link" data-widget="navbar-search" href="#" role="button">
           <i class="fas fa-search"></i>
@@ -194,6 +196,26 @@ Commenter/Décommenter du code : au lieu d'ajouter “//” à la main à chaque
           <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
       </li>
+      <!-- LaravelLocalization Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="far fa-flag"></i>
+        </a>
+        <ul class="dropdown-menu">
+          <li>
+              {{--<!-- inner menu: contains the actual data -->--}}
+              <ul class="menu">
+                  @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                      <li>
+                          <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                              {{ $properties['native'] }}
+                          </a>
+                      </li>
+                  @endforeach
+              </ul>
+          </li>
+      </ul>
+      </li>
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
           <i class="fas fa-expand-arrows-alt"></i>
@@ -264,8 +286,7 @@ Commenter/Décommenter du code : au lieu d'ajouter “//” à la main à chaque
 
 @if (app()->getLocale() == 'ar')
 <script src="{{ asset('dashboard_files/rtl/js/adminlte.js') }}"></script>
-@endif
-@if (app()->getLocale() == 'fr')
+@else
 <script src="{{ asset('dashboard_files/js/adminlte.js') }}"></script>
 @endif
 <!-- AdminLTE for demo purposes -->
