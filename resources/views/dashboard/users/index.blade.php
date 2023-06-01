@@ -69,12 +69,23 @@
                             <td>{{ $user->last_name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>
-                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i> @lang('site.edit')</a>
-                            <form action="{{ route('users.destroy', $user->id) }}" method="post" style="display: inline-block">
+                            @if (auth()->user()->hasPermission('users_update'))
+                              <a href="{{ route('users.edit', $user->id) }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i> @lang('site.edit')</a>
+                              @else
+                              <a href="#" class="btn btn-info btn-sm disabled"><i class="fa fa-edit"></i> @lang('site.edit')</a>
+                            @endif
+                            @if (auth()->user()->hasPermission('users_delete'))
+                              <form action="{{ route('users.destroy', $user->id) }}" method="post" style="display: inline-block">
                                 {{ csrf_field() }}
                                 {{ method_field('delete') }}
                                 <button type="submit" class="btn btn-danger delete btn-sm"><i class="fa fa-trash"></i> @lang('site.delete')</button>
-                            </form><!-- end of form -->
+                              </form><!-- end of form -->
+                            @else
+                                <button class="btn btn-danger btn-sm disabled"><i class="fa fa-trash"></i> @lang('site.delete')</button>
+                            @endif
+                          
+                          
+                            
                             </td>
                           </tr>
                          
