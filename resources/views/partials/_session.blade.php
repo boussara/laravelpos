@@ -2,6 +2,7 @@
 
     <script>
         new Noty({
+            theme: 'nest',
             type: 'success',
             layout: 'topRight',
             text: "{{ session('success') }}",

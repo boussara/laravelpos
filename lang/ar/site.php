@@ -43,8 +43,8 @@ return [
     'edit_order' => 'تعديل طلب',
 
     'users' => 'المشرفين',
-    'first_name' => 'الاسم الاول',
-    'last_name' => 'الاسم الاخير',
+    'first_name' => 'الاسم',
+    'last_name' => 'اسم العائلة',
     'email' => 'البريد الاكتروني',
     'image' => 'صوره',
     'action' => 'اكشن',
