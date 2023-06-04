@@ -1,7 +1,9 @@
 <?php
-
+namespace App\Http\Controllers\Managers;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Managers\UserController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,11 +17,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+Route::get('/', [ManagerController::class,  'index'])->middleware(['auth', 'verified']);
 
-Route::get('/', function () {
-    return redirect()->route('dashboard.welcome');
-
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
