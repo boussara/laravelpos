@@ -28,18 +28,23 @@
             <div class="card card-primary">
                 <div class="card-header">
                   <h3 class="card-title">@lang('site.users')</h3>
-                  <form action="">
+                  <form action="{{ route('users.index') }}" method="get">
                   <div class="row">
                     <div class="col-md-4">
 
-                        <input type="text" name="search" class="form-control" placeholder="@lang('site.search')">
+                        <input type="text" name="search" class="form-control" placeholder="@lang('site.search')" value="{{ request()->search }}">
  
                     </div>
                     
                     <div class="col-md-4">
+                      <button type="submit" class="btn btn-secondary"><i class="fa fa-search"></i> @lang('site.search')</button>
+                      @if (auth()->user()->hasPermission('users_create'))
+                          <a href="{{ route('users.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> @lang('site.add')</a>
+                      @else
+                          <a href="#" class="btn btn-primary disabled"><i class="fa fa-plus"></i> @lang('site.add')</a>
+                      @endif
 
-                        <button type="submit" class="btn btn-secondary"><i class="fa fa-search"></i> @lang('site.search')</button>
-                        <a href="{{ route('users.create') }}" class="btn btn-secondary"><i class="fa fa-plus"></i> @lang('site.add')</a>
+                       
 
                     </div>
                   </div>
@@ -92,6 +97,10 @@
                         </tbody>
                     @endforeach
                       </table>
+                      <div class="card-footer clearfix">
+                         {{ $users->appends(request()->query())->links() }}
+                      </div>
+                     
                       @else
                         
                       <h2>@lang('site.no_data_found')</h2>

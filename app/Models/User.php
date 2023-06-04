@@ -48,4 +48,22 @@ class User extends Authenticatable implements LaratrustUser
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function getFirstNameAttribute($value)
+    {
+        return ucfirst($value);
+
+    }//end of get first name
+
+    public function getLastNameAttribute($value)
+    {
+        return ucfirst($value);
+
+    }//end of get last name
+
+    public function getImagePathAttribute()
+    {
+        return asset('uploads/user_images/' . $this->image);
+
+    }//end of get image path
 }
