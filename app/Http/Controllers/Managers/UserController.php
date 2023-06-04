@@ -37,7 +37,9 @@ class UserController extends Controller
 
             });
 
-        })->latest()->paginate(1);
+        // })->latest()->paginate(1);
+    })->latest()->paginate(1);
+
 
          return view('dashboard.users.index', compact('users'));
       
