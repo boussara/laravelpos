@@ -56,7 +56,7 @@
                 
                   <div class="card-body">
                     @if ($users->count() > 0)
-                    <table id="example" class="display table-bordered nowrap" style="width:100%">
+                    <table id="datatable_responsive" class="display table-bordered nowrap" style="width:100%">
                       <thead>
                           <tr>
                             <th>#</th>
