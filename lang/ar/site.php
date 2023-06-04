@@ -70,6 +70,9 @@ return [
     'sale_price' => 'سعر البيع',
     'stock' => 'المخزن',
     'profit_percent' => 'المكسب',
+    'Version' => 'إصدار',
+    'Copyright' => 'حقوق النشر',
+    'rights' => 'كل الحقوق محفوظة',
 
     'ar' => [
         'name' => 'الاسم بالغه العربيه',

@@ -1,8 +1,8 @@
 <footer class="main-footer">
-    <strong>Copyright &copy; 2023 <a href="https://brs.ma">BRS</a>.</strong>
-    All rights reserved.
+    <strong>@lang('site.Copyright') &copy; 2023 <a href="https://brs.ma">BRS</a>.</strong>
+    @lang('site.rights').
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.2.0
+      <b>@lang('site.Version')</b> 1.0.0
     </div>
   </footer>
 
