@@ -119,29 +119,28 @@ class UserController extends Controller
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => ['required', Rule::unique('users')->ignore($user->id),],
+            'image' => 'image',
             'permissions' => 'required|min:1'
         ]);
 
-        $request_data = $request->except(['permissions']);
-        // $request_data = $request->except(['permissions', 'image']);
+        $request_data = $request->except(['permissions', 'image']);
+        if ($request->image) {
 
-        // if ($request->image) {
+            if ($user->image != 'default.png') {
 
-        //     if ($user->image != 'default.png') {
+                Storage::disk('public_uploads')->delete('/user_images/' . $user->image);
 
-        //         Storage::disk('public_uploads')->delete('/user_images/' . $user->image);
+            }//end of inner if
 
-        //     }//end of inner if
+            Image::make($request->image)
+                ->resize(300, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })
+                ->save(public_path('uploads/user_images/' . $request->image->hashName()));
 
-        //     Image::make($request->image)
-        //         ->resize(300, null, function ($constraint) {
-        //             $constraint->aspectRatio();
-        //         })
-        //         ->save(public_path('uploads/user_images/' . $request->image->hashName()));
+            $request_data['image'] = $request->image->hashName();
 
-        //     $request_data['image'] = $request->image->hashName();
-
-        // }//end of external if
+        }//end of external if
 
         $user->update($request_data);
 
@@ -155,6 +154,12 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+
+        if ($user->image != 'default.png') {
+
+            Storage::disk('public_uploads')->delete('/user_images/' . $user->image);
+
+        }//end of if
         $user->delete();
         session()->flash('success', __('site.deleted_successfully'));
         return redirect()->route('users.index');

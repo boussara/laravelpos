@@ -2,7 +2,7 @@
  <aside class="main-sidebar sidebar-dark-primary elevation-4" >
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-      <img class="brand-image img-circle elevation-3" style="opacity: .8" src="{{ asset('dashboard_files/img/AdminLTELogo.png ') }}">
+      <img class="brand-image img-circle elevation-3" style="opacity: .8" src="{{asset('uploads/app_logo/logo.jpeg')}}">
       <span class="brand-text font-weight-light">@lang('site.nomApplication')</span>
     </a>
 
@@ -11,7 +11,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img class="img-circle elevation-2" alt="User Image" src="{{ asset('dashboard_files/img/user2-160x160.jpg') }}">
+          <img class="img-circle elevation-2" alt="User Image" src="{{auth()->user()->image_path}}">
         </div>
         <div class="info">
           <a href="#" class="d-block">{{auth()->user()->first_name }} {{auth()->user()->last_name }}</a>
