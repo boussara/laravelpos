@@ -19,7 +19,7 @@ return [
 
     'confirm_delete' => 'Confirmation de la suppression',
     'yes' => 'oui',
-    'no' => 'nonا',
+    'no' => 'non',
 
     'login' => 'connexion',
     'remember_me' => 'souviens-toi de moi',

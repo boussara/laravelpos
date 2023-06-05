@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 
@@ -38,7 +40,7 @@ class UserController extends Controller
             });
 
         // })->latest()->paginate(1);
-    })->latest()->paginate(1);
+    })->paginate(10);
 
 
          return view('dashboard.users.index', compact('users'));
@@ -68,8 +70,20 @@ class UserController extends Controller
             'permissions' => 'required|min:1'
         ]);
 
-        $request_data = $request->except(['password', 'password_confirmation', 'password_confirmation', 'permissions']);
+        $request_data = $request->except(['password', 'password_confirmation', 'password_confirmation', 'permissions', 'image']);
         $request_data['password'] = bcrypt($request->password);
+
+        if ($request->image) {
+
+            Image::make($request->image)
+                ->resize(300, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                })
+                ->save(public_path('uploads/user_images/' . $request->image->hashName()));
+
+            $request_data['image'] = $request->image->hashName();
+
+        }//end of if
 
         $user = User::create($request_data);
         $user->addRole('admin');

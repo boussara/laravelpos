@@ -27,7 +27,10 @@ class User extends Authenticatable implements LaratrustUser
         'last_name',
         'email',
         'password',
+        'image'
     ];
+
+    protected $appends = ['image_path'];
 
     /**
      * The attributes that should be hidden for serialization.
